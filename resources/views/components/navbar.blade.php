@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid col-md-7">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid col-md-12">
         <div class="navbar-brand">To Do Apps</div>
         @auth
             <div class="navbar-collapse justify-content-end" id="navbarNav">
