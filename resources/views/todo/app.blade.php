@@ -11,31 +11,7 @@
 
 <body class="bg-light">
     <!-- 00. Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid col-md-7">
-            <div class="navbar-brand">Simple To Do List</div>
-            <div class="navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <!-- Logout Form -->
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </li>
-                            {{-- <li><a class="dropdown-item" href="#">Update Data</a></li> --}}
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <x-navbar />
     
     <div class="container mt-4">
         <!-- 01. Content-->
@@ -44,21 +20,7 @@
             <div class="col-md-8">
              <div class="card mb-3">
                 <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if ($errors -> any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <x-alert />
                     <!-- 02. Form input data -->
                     <form id="todo-form" action="{{ route('todo.post') }}" method="post">
                         @csrf
@@ -77,7 +39,7 @@
                         <!-- 03. Searching -->
                         <form id="todo-form" action="{{ route('todo') }}" method="get">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="search" value="{{ request('search') }}" 
+                                <input type="text" class="form-control" name="search" value="{{ $search }}" 
                                     placeholder="masukkan kata kunci">
                                 <button class="btn btn-secondary" type="submit">
                                     Cari
@@ -142,7 +104,7 @@
                         </ul>
 
                         <!-- 06. Pagination -->
-                        {{ $data->links() }}
+                        {{ $data->withQueryString()->links() }}
                         
                     </div>
                 </div>

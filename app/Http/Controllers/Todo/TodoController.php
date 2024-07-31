@@ -12,12 +12,13 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $max_data = 5;
         $userId = Auth::id();
+        $search = $request->input('search', '');
 
-        if (request('search')) {
+        if ($search) {
             $data = Todo::where('user_id', $userId)
                         ->where('task', 'like', '%' . request('search') . '%')
                         ->orderBy('id', 'desc')
@@ -27,7 +28,11 @@ class TodoController extends Controller
                         ->orderBy('id', 'desc')
                         ->paginate($max_data);
         }
-        return view('todo.app', compact('data'));
+        
+        return view('todo.app', [
+            'data' => $data,
+            'search' => $search
+        ]);
     }
 
     /**

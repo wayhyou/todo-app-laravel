@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Todo\TodoController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Todo Routes - Protected by auth middleware
 Route::middleware('auth')->group(function () {
+    Route::get('/', [TodoController::class, 'index'])->name('todo');
     Route::get('/todo', [TodoController::class, 'index'])->name('todo');
     Route::post('/todo', [TodoController::class, 'store'])->name('todo.post');
     Route::put('/todo/{id}', [TodoController::class, 'update'])->name('todo.update');
@@ -28,3 +26,10 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.pos
 
 // Logout
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+// Account Settings
+Route::middleware('auth')->group(function () {
+    Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update-name', [UserController::class, 'updateName'])->name('user.updateName');
+    Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+});

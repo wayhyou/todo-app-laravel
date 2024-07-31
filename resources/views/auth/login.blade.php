@@ -11,11 +11,7 @@
 
 <body class="bg-light">
     <!-- 00. Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid col-md-7">
-            <div class="navbar-brand">To Do App</div>
-        </div>
-    </nav>
+    <x-navbar />
     
     <div class="container mt-4">
         <!-- 01. Content-->
